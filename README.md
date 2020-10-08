@@ -8,17 +8,43 @@ Java课程作业项目仓库
 
 
 ##实验过程
-
-
+①构造PC类、CPU类、HardDisk类
+②将CPU类、HardDisk类装包
+③构造Test主类,并调用出CPU类的变量speed,HardDisk类的变量amount然后分别存储，并按书里要求构造Test类的主函数，分别给speed、disk赋值，接着输出它们
 
 ##核心方法
-1.方法1
-2.方法2
+1.方法1  
+    public class CPU
+{   private int speed;
+    public int getSpeed()
+    { return speed; }
+    public void setSpeed(int speed)
+    { this.speed = speed; }
+}
+2.方法2 
+       public static class PC
+    {   CPU cpu;
+        HardDisk HD;
+        void setCPU(CPU cpu)
+        { this.cpu = cpu; }
+        void setHardDisk(HardDisk HD)
+        { this.HD = HD; }
 3.方法3
-
+     public static void main(String[] args)
+        {   CPU cpu = new CPU();
+            HardDisk disk = new HardDisk();
+            PC pc=new PC();
+            cpu.setSpeed(2200);
+            disk.setAmount(200);
+            pc.setCPU(cpu);
+            pc.setHardDisk(disk);
+            pc.show();
+        }
 
 ##实验结果
-
+输出了
+CPU速度：2200
+硬盘容量：200
 
 
 ##实验感想
