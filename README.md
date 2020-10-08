@@ -21,6 +21,7 @@ Java课程作业项目仓库
     public void setSpeed(int speed)
     { this.speed = speed; }
 }
+
 2.方法2 
        public static class PC
     {   CPU cpu;
@@ -29,6 +30,7 @@ Java课程作业项目仓库
         { this.cpu = cpu; }
         void setHardDisk(HardDisk HD)
         { this.HD = HD; }
+
 3.方法3
      public static void main(String[] args)
         {   CPU cpu = new CPU();
@@ -45,7 +47,6 @@ Java课程作业项目仓库
 输出了
 CPU速度：2200
 硬盘容量：200
-
 
 ##实验感想
   经过第一次的实验历练，我感慨万千，因为这次试验是我第一个java程序的构建，我感觉java与c相比，大有所异。我把本实验分为三步，其中第一步就是按照书中所引，构造了PC类、CPU类、HardDisk类。这几类相较于主类来说比较简单，所以我按图索骥很快完成了构建。
