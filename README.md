@@ -1,57 +1,111 @@
-# Java-
-Java课程作业项目仓库
-
-#阅读程序
-
-##实验目的
-完成教材p100第四题关于PC、内存等模拟的程序
+＃Java-
 
 
-##实验过程
-①构造PC类、CPU类、HardDisk类
-②将CPU类、HardDisk类装包
-③构造Test主类,并调用出CPU类的变量speed,HardDisk类的变量amount然后分别存储，并按书里要求构造Test类的主函数，分别给speed、disk赋值，接着输出它们
 
-##核心方法
-1.方法1  
-    public class CPU
-{   private int speed;
-    public int getSpeed()
-    { return speed; }
-    public void setSpeed(int speed)
-    { this.speed = speed; }
-}
+一、实验目的
+初步了解分析系统需求，从学生选课角度了解系统中的实体及其关系，学会定义类中的属性以及方法；
+掌握面向对象的类设计方法（属性、方法）；
+掌握类的继承用法，通过构造方法实例化对象；
+学会使用super()，用于实例化子类；
+掌握使用Object根类的toString（）方法,应用在相关对象的信息输出中。
 
-2.方法2 
-       public static class PC
-    {   CPU cpu;
-        HardDisk HD;
-        void setCPU(CPU cpu)
-        { this.cpu = cpu; }
-        void setHardDisk(HardDisk HD)
-        { this.HD = HD; }
 
-3.方法3
-     public static void main(String[] args)
-        {   CPU cpu = new CPU();
-            HardDisk disk = new HardDisk();
-            PC pc=new PC();
-            cpu.setSpeed(2200);
-            disk.setAmount(200);
-            pc.setCPU(cpu);
-            pc.setHardDisk(disk);
-            pc.show();
+
+
+二、实验要求
+说明： 学校有“人员”，分为“教师”和“学生”，教师教授“课程”，学生选择“课程”。从简化系统考虑，每名教师仅教授一门课程，每门课程的授课教师也仅有一位，每名学生选仅选一门课程。
+对象： 
+人员（编号、姓名、性别）
+教师（编号、姓名、性别、所授课程）
+学生（编号、姓名、性别、所选课程）
+课程（编号、课程名称、上课地点、时间、授课教师、最多选课人数、选课学生名单）
+
+
+
+三、实验设计与核心代码
+结构设计
+1.课程类
+2.成员类
+3.教师类
+4.学生类
+5.主类
+父类
+public class Member{
+    private int id;//编号
+    private String name;//姓名
+    private String sex; //性别
+    public Member(int id, String name, String sex) {
+        this.id = id;
+        this.name = name;
+        this.sex = sex;
+    }
+    
+    
+    
+子类
+public class Teacher extends Member{
+    private Course course;
+    public Teacher(int id, String name, String sex, Course course) {
+        super(id, name, sex);
+        this.course = course;
+    }
+    public Teacher(int id, String name, String gender) {
+        super(id, name, gender);
+    }
+    
+    
+(其中父类使成员类，子类使教师类和学生类，子类继承父类的属性)
+
+
+
+选课和退课设计
+1.选课设计
+当进行选课时，判断课程是否满员，如果满员则直接结束，选课失败。如果没有满员，那么继续判断。当学生选课超过一门时不能再选课，这时调用退课系统。
+全部判断通过后，将学生对象放入目标课程选课名单中，并将课程对象放入学生对象的已选课程中，选课结束。
+    public static void studentSelectCourse(Student stu, Course c) {
+            System.out.print("学生 " + stu + " 执行选课 " + c.getName() + " ...");
+            if (!c.hasSpace()) {
+                System.out.println("选课失败！");
+                return;
+            }
+            if (stu.hasSelectedCourse()) {
+                System.out.println("已有课程，需要先退课");
+                studentUnselectCourse(stu, true);
+            }
+            c.addStudent(stu);
+            stu.setSelectedCourse(c);
+            System.out.println("选课成功！");
         }
+        
+        
+        
+2.退课设计
+当程序判定由学生选课超过一门时，直接退课。如果没有超过一门，那么无需退课，直接结束退课系统。
+ public static void studentUnselectCourse(Student stu) {
+            studentUnselectCourse(stu, false);
+        }
+        public static void studentUnselectCourse(Student stu, boolean forced) {
+            System.out.print("学生 " + stu + " 执行退课...");
+            if (forced || stu.hasSelectedCourse()) {
+                Course c = stu.getSelectedCourse();
+                if (c != null)
+                    c.removeStudent(stu);
+                stu.setSelectedCourse(null);
+                System.out.println("退课成功！");
+            } else {
+                System.out.println("退课失败！");
+            }
+        }
+ 
+ 
+ 
+四、实验结果
+见屏幕截图(70).png
 
-##实验结果
-输出了
-CPU速度：2200
-硬盘容量：200
 
-##实验感想
-  经过第一次的实验历练，我感慨万千，因为这次试验是我第一个java程序的构建，我感觉java与c相比，大有所异。我把本实验分为三步，其中第一步就是按照书中所引，构造了PC类、CPU类、HardDisk类。这几类相较于主类来说比较简单，所以我按图索骥很快完成了构建。
-  第二步就是构建主类了，在构建主类时，我遇到了很多麻烦，比如，把多个类分出在不同的包中，用public private等修饰符修饰。这个问题使我定义的几个变量没有亮起来，后来我经过网上搜索，学会了调用包，private调用当类的变量，还有public把变量公共的方法，解决了我的问题。
-  第三步是写主类里的main()函数，再写main函数时我又遇到了难以解决的问题，我定义的void型主函数里，主函数又没亮，编译器指出要用static...(String[] args),正当我用完后，发现它无法从静态中引用非静态的变量，于是我网上不断寻找方法，有人建议PC= newPC()，把新变量声明在类外等等，可这对于我的问题根本解决不了。我不断地试错，最终明白了要改变我的前类，也要加static,这样就使前后变量一致了。
-  这次实验对于我这个萌新来说真的太费时费力，但我也能解决我的问题。我想，有了第一次编程的经验应该也能为后面铺一些路了，这样能避免我再犯许多错误！
+
+五、实验感想
+    这次综合实验教会了我如何用to string()输出信息，父类与子类的继承用法，以及选课时如何用方法判定人数是否满员，满员就调用退课；如果选课超过一门那么也调用退课。
+这次实验真的很辛苦，但使我学习到了如何合理地构建类和对象的框架，使各个类之间满足关系，由于继承关系，因此我省去了定义全部属性，而是将一部分参数放入构造方法中。还有就是super（）继承父类的用法。总之这次实验我真的是收获颇丰！
 
 
